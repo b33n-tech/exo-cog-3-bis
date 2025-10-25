@@ -4,51 +4,53 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Exo-Cog Partie 2</title>
-<style>
-body { font-family: Arial, sans-serif; margin:20px; background:#f4f4f4; }
-h2 { margin-top:30px; color:#333; }
-.module { background:white; padding:15px; margin-bottom:20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
-ul { list-style:none; padding-left:0; }
-li { margin:5px 0; }
-.checkbox { margin-right:10px; }
-table { width:100%; border-collapse: collapse; }
-th, td { border:1px solid #ddd; padding:8px; }
-th { background:#f0a500; color:white; }
-button { background:#f0a500; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; margin-left:5px; }
-button:hover { opacity:0.85; }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <h1>Exo-Cog – Partie 2</h1>
 
+<!-- Jalons -->
 <div class="module" id="jalonsModule">
   <h2>Jalons & Sous-actions</h2>
   <ul id="jalonsList"></ul>
 </div>
 
+<!-- Messages / Mails -->
 <div class="module" id="messagesModule">
   <h2>Messages / Emails</h2>
   <table id="messagesTable">
     <thead>
-      <tr><th>Envoyer</th><th>Destinataire</th><th>Sujet</th><th>Texte</th></tr>
+      <tr><th>À traiter</th><th>Destinataire</th><th>Sujet</th><th>Texte</th></tr>
     </thead>
     <tbody></tbody>
   </table>
+  <div style="margin-top:10px;">
+    <select id="mailPromptSelect">
+      <option value="1">Template formel</option>
+      <option value="2">Template amical</option>
+    </select>
+    <button id="generateMailBtn">Générer Mail GPT</button>
+  </div>
 </div>
 
+<!-- RDV -->
 <div class="module" id="rdvModule">
   <h2>Rendez-vous / Créneaux</h2>
   <ul id="rdvList"></ul>
 </div>
 
+<!-- Autres ressources -->
 <div class="module" id="autresModule">
   <h2>Autres ressources</h2>
   <ul id="autresList"></ul>
 </div>
 
-<input type="file" id="uploadJson" accept=".json">
-<button id="loadBtn">Charger JSON LLM</button>
+<!-- Upload JSON LLM -->
+<div style="margin-top:20px;">
+  <input type="file" id="uploadJson" accept=".json">
+  <button id="loadBtn">Charger JSON LLM</button>
+</div>
 
 <script src="script.js"></script>
 </body>
