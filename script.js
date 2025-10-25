@@ -5,6 +5,15 @@ const autresList = document.getElementById("autresList");
 const uploadJson = document.getElementById("uploadJson");
 const loadBtn = document.getElementById("loadBtn");
 
+const generateMailBtn = document.getElementById("generateMailBtn");
+const mailPromptSelect = document.getElementById("mailPromptSelect");
+
+// Bibliothèque de prompts pour mails
+const mailPrompts = {
+  1: "Écris un email professionnel clair et concis pour :",
+  2: "Écris un email amical et léger pour :"
+};
+
 let llmData = null;
 
 // --- Fonction render ---
@@ -38,13 +47,13 @@ function renderModules() {
   if(llmData?.messages){
     llmData.messages.forEach((m,i)=>{
       const tr = document.createElement("tr");
-      const tdSend = document.createElement("td");
+      const tdCheck = document.createElement("td");
       const cb = document.createElement("input");
       cb.type="checkbox";
       cb.checked = m.envoyé;
       cb.addEventListener("change", ()=> m.envoyé = cb.checked);
-      tdSend.appendChild(cb);
-      tr.appendChild(tdSend);
+      tdCheck.appendChild(cb);
+      tr.appendChild(tdCheck);
       tr.appendChild(document.createElement("td")).textContent = m.destinataire;
       tr.appendChild(document.createElement("td")).textContent = m.sujet;
       tr.appendChild(document.createElement("td")).textContent = m.texte;
@@ -98,4 +107,28 @@ loadBtn.addEventListener("click", ()=>{
     }catch(err){ console.error(err); alert("Fichier JSON invalide !"); }
   };
   reader.readAsText(file);
+});
+
+// --- Générer Mail GPT ---
+generateMailBtn.addEventListener("click", () => {
+  if(!llmData?.messages) return;
+  const selectedMessages = llmData.messages.filter(m => m.envoyé);
+  if(selectedMessages.length === 0){
+    alert("Coche au moins un message !");
+    return;
+  }
+
+  const promptId = mailPromptSelect.value;
+  const promptTexte = mailPrompts[promptId];
+
+  let content = selectedMessages.map(m => `À: ${m.destinataire}\nSujet: ${m.sujet}\nMessage: ${m.texte}`).join("\n\n");
+  const finalPrompt = `${promptTexte}\n\n${content}`;
+
+  // Copier dans le presse-papiers
+  navigator.clipboard.writeText(finalPrompt)
+    .then(() => alert("Prompt + messages copiés dans le presse-papiers !"))
+    .catch(err => console.error("Erreur copie: ", err));
+
+  // Ouvrir ChatGPT
+  window.open("https://chatgpt.com/", "_blank");
 });
