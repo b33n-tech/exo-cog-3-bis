@@ -10,6 +10,16 @@
 
 <h1>Exo-Cog – Partie 2</h1>
 
+<!-- Upload JSON LLM -->
+<div class="module" id="uploadModule">
+  <h2>Charger JSON LLM</h2>
+  <div class="upload-container">
+    <input type="file" id="uploadJson" accept=".json">
+    <button id="loadBtn">Charger JSON</button>
+  </div>
+  <p id="uploadStatus"></p>
+</div>
+
 <!-- Jalons -->
 <div class="module" id="jalonsModule">
   <h2>Jalons & Sous-actions</h2>
@@ -25,7 +35,7 @@
     </thead>
     <tbody></tbody>
   </table>
-  <div style="margin-top:10px;">
+  <div class="mail-actions">
     <select id="mailPromptSelect">
       <option value="1">Template formel</option>
       <option value="2">Template amical</option>
@@ -44,12 +54,6 @@
 <div class="module" id="autresModule">
   <h2>Autres ressources</h2>
   <ul id="autresList"></ul>
-</div>
-
-<!-- Upload JSON LLM -->
-<div style="margin-top:20px;">
-  <input type="file" id="uploadJson" accept=".json">
-  <button id="loadBtn">Charger JSON LLM</button>
 </div>
 
 <script src="script.js"></script>
