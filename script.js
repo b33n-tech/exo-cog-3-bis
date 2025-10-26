@@ -4,6 +4,7 @@ const rdvList = document.getElementById("rdvList");
 const autresList = document.getElementById("autresList");
 const uploadJson = document.getElementById("uploadJson");
 const loadBtn = document.getElementById("loadBtn");
+const uploadStatus = document.getElementById("uploadStatus");
 
 const generateMailBtn = document.getElementById("generateMailBtn");
 const mailPromptSelect = document.getElementById("mailPromptSelect");
@@ -98,13 +99,21 @@ function renderModules() {
 // --- Charger JSON ---
 loadBtn.addEventListener("click", ()=>{
   const file = uploadJson.files[0];
-  if(!file){ alert("Choisis un fichier JSON LLM !"); return; }
+  if(!file){ 
+    alert("Choisis un fichier JSON LLM !"); 
+    return; 
+  }
   const reader = new FileReader();
   reader.onload = e=>{
     try{
       llmData = JSON.parse(e.target.result);
       renderModules();
-    }catch(err){ console.error(err); alert("Fichier JSON invalide !"); }
+      uploadStatus.textContent = `Fichier "${file.name}" chargé avec succès !`;
+    }catch(err){ 
+      console.error(err); 
+      alert("Fichier JSON invalide !"); 
+      uploadStatus.textContent = "";
+    }
   };
   reader.readAsText(file);
 });
